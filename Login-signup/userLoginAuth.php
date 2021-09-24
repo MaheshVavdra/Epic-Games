@@ -14,7 +14,7 @@
     $count = mysqli_num_rows($result);  
           
     if($count == 1){  
-        header("Location: ./Dashboard/");
+        header("Location: ./Product Dashboard/");
     }  
     else{  
         echo "<h1> Login failed. Invalid username or password.</h1>";  
