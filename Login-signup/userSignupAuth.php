@@ -30,7 +30,7 @@
             header('Location: ' . $_SERVER['HTTP_REFERER']);
         }  
 
-        $sql = "INSERT INTO `login`( `emailid`, `username`, `password`) 
+        $sql = "INSERT INTO `login`( `email`, `username`, `password`) 
         VALUES ('$email','$username','$mainPassword')";                                       
         if ($con->query($sql) === TRUE) {
         echo '<script>alert("Congratulations !!!\nNow you are a new Member of Epic Games.");
