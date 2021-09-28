@@ -232,9 +232,10 @@ li {
 /* Hero */
 .header .hero-img {
   position: absolute;
-  bottom: -10%;
+  margin-right: 150px;
+  /* bottom: 0%; */
   right: -5%;
-  height: 70rem;
+  height: 60rem;
   object-fit: contain;
 }
 
