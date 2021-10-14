@@ -223,7 +223,7 @@ echo '
             <h2><span class="discount">70% </span> SALE OFF</h2>
             <h1>
               <span>Collect Your</span>
-              <span>Kids Collection</span>
+              <span>Action Collection</span>
             </h1>
             <a class="btn" href="#">shop now</a>
           </div>
