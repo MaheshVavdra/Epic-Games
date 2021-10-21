@@ -25,7 +25,7 @@ echo '<!DOCTYPE html>
     <nav class="nav">
       <div class="navigation container">
         <div class="logo">
-          <h1>Codevo</h1>
+          <h1>Epic Games</h1>
         </div>
 
         <div class="menu">
@@ -43,7 +43,7 @@ echo '<!DOCTYPE html>
               <a href="#home" class="nav-link scroll-link">Home</a>
             </li>
             <li class="nav-item">
-              <a href="product.html" class="nav-link">Products</a>
+              <a href="product.php" class="nav-link">Products</a>
             </li>
             <li class="nav-item">
               <a href="#about" class="nav-link scroll-link">About</a>
