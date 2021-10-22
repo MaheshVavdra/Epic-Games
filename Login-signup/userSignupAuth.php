@@ -18,32 +18,34 @@
     
     if($mainPassword === $cnfPassword){
 
-        $sql = "select * from login where username = '$username' and password = '$password'";         
+        $sql = "select * from login where email = '$email'";         
         $result = mysqli_query($con, $sql);  
-        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);  
-        $count = mysqli_num_rows($result);  
-            
-        if($count == 1){  
+        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);            
+        echo mysqli_num_rows($result);
+        echo $sql;
+        if(mysqli_num_rows($result) != 0){  
             echo '<script>alert("Username Already Exist.\nPlease Try a different Username.");
             window.location.href = "Login.html"
             </script>';   
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
-        }  
+            // header('Location: ' . $_SERVER['HTTP_REFERER']);
+        } else{
+            $sql = "INSERT INTO `login`( `email`, `username`, `password`) 
+            VALUES ('$email','$username','$mainPassword')";                                       
+            if ($con->query($sql) === TRUE) {
+            // echo '<script>alert("Congratulations !!!\nNow you are a new Member of Epic Games.");
+            // window.location.href = "Login.html"
+            // </script>';       
 
-        $sql = "INSERT INTO `login`( `email`, `username`, `password`) 
-        VALUES ('$email','$username','$mainPassword')";                                       
-        if ($con->query($sql) === TRUE) {
-        echo '<script>alert("Congratulations !!!\nNow you are a new Member of Epic Games.");
-        window.location.href = "Login.html"
-        </script>';       
-
-        // echo "<script>
-        // alert('Congratulations !!!\nNow you are a new Member of Epic Games.');
-        // window.location.href = 'Login.html'
-        // </script>";
-        } else {
-        echo "Error: " . $sql . "<br>" . $con->error;
+            // echo "<script>
+            // alert('Congratulations !!!\nNow you are a new Member of Epic Games.');
+            // window.location.href = 'Login.html'
+            // </script>";
+            } else {
+            echo "Error: " . $sql . "<br>" . $con->error;
+            }
         }
+
+        
 
         $con->close();
     }

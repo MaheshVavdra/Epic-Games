@@ -1,3 +1,10 @@
+<?php
+include('DBConnect.php');
+session_start();
+$sql = "select * from cart where user_id = ".$_SESSION["userid"];
+$result = mysqli_query($con, $sql);
+
+echo "
 <!doctype html>
 <html>
 
@@ -181,7 +188,7 @@
         }
 
         #code {
-            background-image: linear-gradient(to left, rgba(255, 255, 255, 0.253), rgba(255, 255, 255, 0.185)), url("https://img.icons8.com/small/16/000000/long-arrow-right.png");
+            background-image: linear-gradient(to left, rgba(255, 255, 255, 0.253), rgba(255, 255, 255, 0.185)), url('https://img.icons8.com/small/16/000000/long-arrow-right.png');
             background-repeat: no-repeat;
             background-position-x: 95%;
             background-position-y: center
@@ -190,82 +197,60 @@
 </head>
 
 <body oncontextmenu='return false' class='snippet-body'>
-    <div class="card">
-        <div class="row">
-            <div class="col-md-8 cart">
-                <div class="title">
-                    <div class="row">
-                        <div class="col">
+    <div class='card'>
+        <div class='row'>
+            <div class='col-md-8 cart'>
+                <div class='title'>
+                    <div class='row'>
+                        <div class='col'>
                             <h4><b>Shopping Cart</b></h4>
                         </div>
-                        <div class="col align-self-center text-right text-muted">3 items</div>
+                        <div class='col align-self-center text-right text-muted'>".mysqli_num_rows($result)." items</div>
+                    </div>
+                </div>                            
+                ";
+                $totalBillAmount = 0;
+                while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                    $Prod_details = "select * from epicnames where id = ".$row["item_id"];
+                    $prod_res =  mysqli_query($con, $Prod_details);
+                    $prod_row = mysqli_fetch_array($prod_res, MYSQLI_ASSOC);
+                    // print_r($prod_row);
+                    $totalBillAmount += $prod_row['price'];
+                    echo "
+                    <div class='row border-top border-bottom' >
+                    <div class='row main align-items-center'>
+                        <div class='col-2'><img class='img-fluid' src='.".$prod_row['dashboardimage']."'></div>
+                        <div class='col'>
+                            <div class='row text-muted'>".$prod_row['category']."</div>
+                            <div class='row'>".$prod_row['name']."</div>
+                        </div>                        
+                        <div class='col'>&#x20B9; ".$prod_row['price']." <a href='delItemFromCart.php?item_id=".$row["item_id"]."&userid=".$row['user_id']."'><span class='close' >&#10005;</span></a></div>
                     </div>
                 </div>
-                <div class="row border-top border-bottom" >  
-                    <div class="row main align-items-center">
-                        <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/1GrakTl.jpg"></div>
-                        <div class="col">
-                            <div class="row text-muted">Shirt</div>
-                            <div class="row">Cotton T-shirt</div>
-                        </div>
-                        <div class="col"> <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a> </div>
-                        <div class="col">&euro; 44.00 <span class="close" onclick="remove(this)">&#10005;</span></div>
-                    </div>
-                </div>
-                <!-- <div class="row">
-                    <div class="row main align-items-center">
-                        <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/ba3tvGm.jpg"></div>
-                        <div class="col">
-                            <div class="row text-muted">Shirt</div>
-                            <div class="row">Cotton T-shirt</div>
-                        </div>
-                        <div class="col"> <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a> </div>
-                        <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
-                    </div>
-                </div> -->
-                <div class="row border-top border-bottom" >
-                    <div class="row main align-items-center">
-                        <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/1GrakTl.jpg"></div>
-                        <div class="col">
-                            <div class="row text-muted">Shirt</div>
-                            <div class="row">Cotton T-shirt</div>
-                        </div>
-                        <div class="col"> <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a> </div>
-                        <div class="col">&euro; 44.00 <span class="close" onclick="remove(this)">&#10005;</span></div>
-                    </div>
-                </div>
-                <div class="row border-top border-bottom" >
-                    <div class="row main align-items-center">
-                        <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/pHQ3xT3.jpg"></div>
-                        <div class="col">
-                            <div class="row text-muted">Shirt</div>
-                            <div class="row">Cotton T-shirt</div>
-                        </div>
-                        <div class="col"> <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a> </div>
-                        <div class="col">&euro; 44.00 <span class="close" onclick="remove(this)">&#10005;</span></div>
-                    </div>
-                </div>
-                <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+                    ";
+                }
+                echo "                
+                <div class='back-to-shop'><a href='product.php'>&leftarrow;</a><span class='text-muted'>Back to shop</span></div>
             </div>
-            <div class="col-md-4 summary">
+            <div class='col-md-4 summary'>
                 <div>
                     <h5><b>Summary</b></h5>
                 </div>
                 <hr>
-                <div class="row">
-                    <div class="col" style="padding-left:0;">ITEMS 3</div>
-                    <div class="col text-right">&euro; 132.00</div>
+                <div class='row'>
+                    <div class='col' style='padding-left:0;'>ITEMS 3</div>
+                    <div class='col text-right'>&#x20B9; ".$totalBillAmount.".00</div>
                 </div>
                 <form>
                     <p>SHIPPING</p> <select>
-                        <option class="text-muted">Standard-Delivery- &euro;5.00</option>
+                        <option class='text-muted'>Standard-Delivery- &#x20B9;100.00</option>
                     </select>
-                    <p>GIVE CODE</p> <input id="code" placeholder="Enter your code">
+                    <p>GIVE CODE</p> <input id='code' placeholder='Enter your code'>
                 </form>
-                <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                    <div class="col">TOTAL PRICE</div>
-                    <div class="col text-right">&euro; 137.00</div>
-                </div> <button class="btn">CHECKOUT</button>
+                <div class='row' style='border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;'>
+                    <div class='col'>TOTAL PRICE</div>
+                    <div class='col text-right'>&#x20B9; ".($totalBillAmount+100).".00</div>
+                </div> <button class='btn'>CHECKOUT</button>
             </div>
         </div>
     </div>
@@ -275,8 +260,11 @@
         function remove(item) {
             var itemBox = item.parentElement.parentElement.parentElement;
             itemBox.remove();
+                        
         }
     </script>
 </body>
 
 </html>
+";
+?>

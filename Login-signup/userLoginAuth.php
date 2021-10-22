@@ -1,6 +1,7 @@
 
 <?php      
     include('DBConnect.php');      
+    session_start();
     $username = $_POST['username'];  
     $password = $_POST['password'];          
     $username = stripcslashes($username);  
@@ -14,9 +15,18 @@
     $count = mysqli_num_rows($result);  
           
     if($count == 1){  
-        header("Location: ../Product Dashboard/");
+        $_SESSION["userid"] =  $row['user_id'];
+        // echo $_SESSION["userid"];
+        if($row['Admin'] == 0){            
+            header("Location: ../Product Dashboard/");
+        }
+        else{            
+            header("Location: ../Admin Dashboard/");
+        }
     }  
     else{  
-        echo "<h1> Login failed. Invalid username or password.</h1>";  
+        echo '<script>alert("Invelid Credentials !!!\nPlease Login with your Username and Password.");
+        window.location.href = "Login.html"
+        </script>';   
     }     
 ?>  

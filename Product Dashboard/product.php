@@ -91,13 +91,14 @@ echo '<!DOCTYPE html>
             <img src=".'.$row["dashboardimage"].'" alt="">
                 <ul class="icons">
                     <span><i class="bx bx-heart"></i></span>
-                    <a href="cart.html"> <span><i class="bx bx-shopping-bag"></i></span>
+                    <a href="addToCart.php?pr_id='.$row["id"].'&here=product.php';
+                    echo '"> <span><i class="bx bx-shopping-bag"></i></span>
                     </a>
                     <span><i class="bx bx-search"></i></span>
                 </ul>
             </div>
-            <div class="product-footer">
-                <a href="product-details.html">
+            <div class="product-footer">          
+            <a href="product-details.php?product_id='.$row["id"].'">                        
                     <h3>'.$row["name"].'</h3>
                 </a>
                 <div class="rating">
@@ -150,13 +151,13 @@ echo '<!DOCTYPE html>
                         <span>
                             <i class="fas fa-map-marker-alt"></i>
                         </span>
-                        42 Dream House, Dreammy street, 7131 Dreamville, USA
+                        A-406 Narmada Nagar Bhayander East India
                     </div>
                     <div>
                         <span>
                             <i class="far fa-envelope"></i>
                         </span>
-                        company@gmail.com
+                        EpicGames@gmail.com
                     </div>
                     <div>
                         <span>
@@ -168,7 +169,7 @@ echo '<!DOCTYPE html>
                         <span>
                             <i class="far fa-paper-plane"></i>
                         </span>
-                        Dream City, USA
+                        Maharashtra, India
                     </div>
                 </div>
             </div>

@@ -26,11 +26,11 @@
 		      			<input type="text" name="username" class="form-control" placeholder="Username" required>
 		      		</div>
 	            <div class="form-group">
-	              <input id="password-field" name= "password" type="password" class="form-control" placeholder="Password" required>
+	              <input id="password-field" name= "password" type="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Password" required>
 	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 	            </div>
 	            <div class="form-group">
-	            	<button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
+	            	<button id= "Submit-button" type="submit" class="form-control btn btn-primary submit px-3 " disabled>Sign In</button>
 	            </div>
 	            <div class="form-group d-md-flex">
 	            	<div class="w-50">
@@ -59,6 +59,43 @@
   <script src="js/popper.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/main.js"></script>
+  <script>
+	var myInput = document.getElementById("password-field");
+	
+	// When the user starts to type something inside the password field
+	myInput.onkeyup = function() {
+	  // Validate lowercase letters
+	  var lowerCaseLetters = /[a-z]/g;
+	  if(myInput.value.match(lowerCaseLetters)) {
+		document.getElementById('Submit-button').disabled = false;
+	  } else {
+		document.getElementById('Submit-button').disabled = true;
+	}
+	
+	  // Validate capital letters
+	  var upperCaseLetters = /[A-Z]/g;
+	  if(myInput.value.match(upperCaseLetters)) {
+		document.getElementById('Submit-button').disabled = false;
+	  } else {
+		document.getElementById('Submit-button').disabled = true;
+	  }
+	
+	  // Validate numbers
+	  var numbers = /[0-9]/g;
+	  if(myInput.value.match(numbers)) {
+		document.getElementById('Submit-button').disabled = false;
+	  } else {
+		document.getElementById('Submit-button').disabled = true;
+	  }
+	
+	  // Validate length
+	  if(myInput.value.length >= 8) {
+		document.getElementById('Submit-button').disabled = false;
+	  } else {
+		document.getElementById('Submit-button').disabled = true;
+	  }
+	}
+	</script>
 
 	</body>
 </html>
